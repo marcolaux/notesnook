@@ -70,7 +70,7 @@ export function AppDnDContext({ children }: { children: React.ReactNode }) {
 
   };
 
-  const handleDragOver = (event: DragOverEvent) => {
+  const handleDragOver = (event: DragOverEvent) => { console.log("DragOver", event.over?.id);
     const { active, over } = event;
     if (!over) return;
 
@@ -109,7 +109,7 @@ export function AppDnDContext({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => { console.log("DragEnd", event);
     const { active, over } = event;
     const activeId = active.id as string;
     setActiveDragId(null);

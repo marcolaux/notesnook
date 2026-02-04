@@ -263,12 +263,7 @@ export default function TabsView() {
             <DropZoneOverlay
               groupId={group.id}
               visible={(() => {
-                if (!activeDragTabId) return false;
-                const groupTabs = tabs.filter((t) => t && t.groupId === group.id);
-                const isDraggingFromThisGroup = groupTabs.some(
-                  (t) => t.id === activeDragTabId
-                );
-                return !isDraggingFromThisGroup || groupTabs.length > 1;
+                return !!activeDragTabId;
               })()}
             />
             {tabs
