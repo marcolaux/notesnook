@@ -273,10 +273,7 @@ class EditorStore extends BaseStore<EditorStore> {
   };
 
   init = () => {
-    const isSingleNote =
-      new URLSearchParams(window.location.search).get("singleNote") === "true";
-
-    if (isSingleNote && this.get().sessions.length === 0) {
+    if (this.get().sessions.length === 0) {
       this.set({
         tabs: [],
         groups: [{ id: "main" }],

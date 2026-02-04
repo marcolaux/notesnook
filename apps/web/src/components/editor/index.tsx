@@ -208,17 +208,7 @@ export default function TabsView() {
     activeGroupId: activeGroup
   } = useEditorStore();
 
-  const isSingleNote =
-    new URLSearchParams(window.location.search).get("singleNote") === "true";
-
-  const effectiveLayout =
-    isSingleNote && activeGroup
-      ? ({
-          id: "root-layout",
-          type: "group",
-          groupId: activeGroup
-        } as LayoutNode)
-      : layout;
+  const effectiveLayout = layout;
 
   const [activeDragTabId, setActiveDragTabId] = useState<string | null>(null);
 

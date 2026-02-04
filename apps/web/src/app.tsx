@@ -60,8 +60,6 @@ function App() {
   const hasNativeTitlebar =
     useSettingStore.getState().desktopIntegrationSettings?.nativeTitlebar;
   console.timeEnd("loading app");
-  const isSingleNote =
-    new URLSearchParams(window.location.search).get("singleNote") === "true";
 
   useEffect(() => {
     if (isMobile) {
@@ -146,14 +144,11 @@ function DesktopAppContents() {
   const isListPaneVisible = useStore((store) => store.isListPaneVisible);
   const isTablet = useTablet();
   const navPane = useRef<SplitPaneImperativeHandle>(null);
-  const isSingleNote =
-    new URLSearchParams(window.location.search).get("singleNote") === "true";
 
   useEffect(() => {
-    if (isSingleNote) return;
     if (isTablet) navPane.current?.collapse(0);
     else if (navPane.current?.isCollapsed(0)) navPane.current?.expand(0);
-  }, [isTablet, isSingleNote]);
+  }, [isTablet]);
 
   useEffect(() => {
     const event = AppEventManager.subscribe(
@@ -178,7 +173,6 @@ function DesktopAppContents() {
   }, []);
 
   useEffect(() => {
-    if (isSingleNote) return;
     if (isListPaneVisible) {
       if (navPane.current?.hasExpandedSize(1)) {
         navPane.current?.expand(1);
@@ -188,7 +182,7 @@ function DesktopAppContents() {
     } else {
       navPane.current?.collapse(1);
     }
-  }, [isListPaneVisible, isSingleNote]);
+  }, [isListPaneVisible]);
 
   return (
     <>
@@ -211,7 +205,7 @@ function DesktopAppContents() {
               });
             }}
           >
-            {isFocusMode || isSingleNote ? null : (
+            {isFocusMode ? null : (
               <Pane
                 id="nav-pane"
                 initialSize={isTablet ? 0 : 250}
@@ -227,7 +221,7 @@ function DesktopAppContents() {
                 <NavigationMenu onExpand={() => navPane.current?.reset(0)} />
               </Pane>
             )}
-            {isFocusMode || isSingleNote ? null : (
+            {isFocusMode ? null : (
               <Pane
                 id="list-pane"
                 initialSize={380}
@@ -267,7 +261,7 @@ function DesktopAppContents() {
           </SplitPane>
         </Flex>
       </AppDnDContext>
-      {isSingleNote ? null : <StatusBar />}
+      <StatusBar />
     </>
   );
 }

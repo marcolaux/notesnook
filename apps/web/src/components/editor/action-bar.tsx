@@ -617,19 +617,6 @@ const TabStrip = React.memo(function TabStrip({
                           )
                       : undefined
                   }
-                  onOpenInNewWindow={
-                    "note" in session && IS_DESKTOP_APP
-                      ? () => {
-                          import("../../common/desktop-bridge").then(
-                            ({ desktop }) => {
-                              desktop?.window.open.mutate({
-                                noteId: session.note.id
-                              });
-                            }
-                          );
-                        }
-                      : undefined
-                  }
                   onPin={() => useEditorStore.getState().pinTab(tab.id)}
                 />
               );
@@ -662,7 +649,6 @@ type TabProps = {
   onPin: () => void;
   onSave: () => void;
   onRevealInList?: () => void;
-  onOpenInNewWindow?: () => void;
   isGroupFocused?: boolean;
 };
 export function Tab(props: TabProps) {
@@ -684,7 +670,6 @@ export function Tab(props: TabProps) {
     onRevealInList,
     onPin,
     onSave,
-    onOpenInNewWindow,
     isGroupFocused
   } = props;
   const Icon = isLocked
@@ -810,13 +795,6 @@ export function Tab(props: TabProps) {
             isDisabled: isRevealInListDisabled
           },
           { type: "separator", key: "sep2", isHidden: !onRevealInList },
-          {
-            type: "button",
-            title: strings.openInNewWindow(),
-            key: "open-in-new-window",
-            onClick: onOpenInNewWindow,
-            isHidden: !onOpenInNewWindow
-          },
           {
             type: "button",
             key: "pin",
