@@ -22,6 +22,7 @@ import { ScopedThemeProvider } from "./theme-provider";
 import { Note } from "@notesnook/core";
 import { db } from "../common/db";
 
+
 export function AppDnDContext({ children }: { children: React.ReactNode }) {
   const {
     groups,
